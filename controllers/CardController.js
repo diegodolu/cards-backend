@@ -12,6 +12,10 @@ const getCards = async (req, res) => {
 
 const updateCard = async (req, res) => {
     try {
+        // Verifica si el ID de la tarjeta es válido
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: 'Invalid card ID' });
+        }
         // Intenta encontrar la tarjeta por ID y actualizarla con los datos del body
         const card = await Card.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
